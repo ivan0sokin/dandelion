@@ -8,7 +8,7 @@ public:
     ~SandboxApplication() override = default;
 
     void Run() noexcept override {
-        std::cout << "Hello, Dandelion!";
+        std::cout << "Hello, dandelion!";
     }
 };
 
