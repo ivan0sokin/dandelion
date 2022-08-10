@@ -1,7 +1,6 @@
 #include "Engine.h"
-
-#include "Window.h"
 #include "Logger.h"
+#include "WindowCore.h"
 
 namespace Dandelion {
 
@@ -13,11 +12,11 @@ namespace Dandelion {
     bool Engine::Initialize() noexcept {
         coreLogger.Create();
 
-        if (!Window::Initialize()) {
-            coreLogger.Log(LogLevel::Error, "Could not initialize Window");
+        if (!WindowCore::Instance()->Initialize()) {
+            coreLogger.Log(LogLevel::Error, "Could not initialize Window Core");
             return false;
         } else {
-            coreLogger.Log(LogLevel::Info, "Window initialized");
+            coreLogger.Log(LogLevel::Info, "Window Core initialized");
         }
 
         coreLogger.Log(LogLevel::Info, "Engine initialized");
@@ -26,8 +25,8 @@ namespace Dandelion {
     }
 
     void Engine::Terminate() noexcept {
-        Window::Terminate();
-        coreLogger.Log(LogLevel::Info, "Window terminated");
+        WindowCore::Instance()->Terminate();
+        coreLogger.Log(LogLevel::Info, "Window Core terminated");
 
         coreLogger.Log(LogLevel::Info, "Engine terminated");
     }

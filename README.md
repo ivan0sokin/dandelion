@@ -11,3 +11,8 @@ cd build
 cmake ..
 cmake --build . --config release
 ```
+
+# Dependencies
+
+[GLFW](https://github.com/glfw/glfw)\
+[SPDLOG](https://github.com/gabime/spdlog)
