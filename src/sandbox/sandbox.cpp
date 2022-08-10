@@ -1,17 +1,23 @@
 #include <Dandelion.h>
-#include <iostream>
 
-class SandboxApplication : public Dandelion::Application {
+using namespace Dandelion;
+
+class SandboxApplication : public Application {
 public:
     SandboxApplication() noexcept = default;
 
     ~SandboxApplication() override = default;
 
     void Run() noexcept override {
-        std::cout << "Hello, dandelion!";
+        mLogger = std::make_unique<Logger>("Sandbox", "Sandbox.log");
+        mLogger->Create();
+        mLogger->Log(LogLevel::Info, "Hello, Sandbox!");
     }
+
+private:
+    std::unique_ptr<Logger> mLogger;
 };
 
-Dandelion::Application* CreateApplication() {
+Application* CreateApplication() {
     return new SandboxApplication();
 }

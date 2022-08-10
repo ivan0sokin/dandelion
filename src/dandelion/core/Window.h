@@ -11,7 +11,9 @@ namespace Dandelion {
     public:
         static bool Initialize() noexcept;
         static void Terminate() noexcept;
+
     private:
+        inline static bool isInitialized = false;
         GLFWwindow *mWindowHandle;
     };
 

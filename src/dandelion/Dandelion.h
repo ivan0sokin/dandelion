@@ -4,5 +4,7 @@
 #include "EntryPoint.h"
 
 #include "core/Core.h"
+#include "core/Logger.h"
+#include "core/Window.h"
 
 #endif
