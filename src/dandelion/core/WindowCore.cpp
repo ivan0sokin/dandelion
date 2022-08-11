@@ -9,8 +9,10 @@ namespace Dandelion {
             return false;
         }
 
+        CoreLogger::Instance()->Log(LogLevel::Info, "GLFW initialized");
+
         glfwSetErrorCallback([](int, const char *description) {
-            coreLogger.Log(LogLevel::Error, description);
+            CoreLogger::Instance()->Log(LogLevel::Error, description);
         });
 
         return mIsInitialized = true;
@@ -19,6 +21,8 @@ namespace Dandelion {
     void WindowCore::Terminate() noexcept {
         if (mIsInitialized) {
             glfwTerminate();
+
+            CoreLogger::Instance()->Log(LogLevel::Info, "GLFW terminated");
         }
     }
 

@@ -2,7 +2,7 @@
 
 namespace Dandelion {
 
-    void Logger::Create() noexcept {
+    void Logger::Register() noexcept {
         using namespace spdlog;
 
         auto consoleSink = std::make_shared<sinks::stdout_color_sink_mt>();
@@ -21,4 +21,10 @@ namespace Dandelion {
     void Logger::Log(const LogLevel &logLevel, std::string_view message) noexcept {
         mInternalLogger->log(static_cast<spdlog::level::level_enum>(logLevel), message);
     }
+
+    std::shared_ptr<CoreLogger> CoreLogger::Instance() noexcept {
+        static std::shared_ptr<CoreLogger> instance{new CoreLogger()};
+        return instance;
+    }
+
 }

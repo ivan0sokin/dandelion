@@ -10,25 +10,25 @@ namespace Dandelion {
     }
 
     bool Engine::Initialize() noexcept {
-        coreLogger.Create();
+        CoreLogger::Instance()->Register();
 
         if (!WindowCore::Instance()->Initialize()) {
-            coreLogger.Log(LogLevel::Error, "Could not initialize Window Core");
+            CoreLogger::Instance()->Log(LogLevel::Error, "Could not initialize Window Core");
             return false;
         } else {
-            coreLogger.Log(LogLevel::Info, "Window Core initialized");
+            CoreLogger::Instance()->Log(LogLevel::Info, "Window Core initialized");
         }
 
-        coreLogger.Log(LogLevel::Info, "Engine initialized");
+        CoreLogger::Instance()->Log(LogLevel::Info, "Engine initialized");
 
         return true;
     }
 
     void Engine::Terminate() noexcept {
         WindowCore::Instance()->Terminate();
-        coreLogger.Log(LogLevel::Info, "Window Core terminated");
+        CoreLogger::Instance()->Log(LogLevel::Info, "Window Core terminated");
 
-        coreLogger.Log(LogLevel::Info, "Engine terminated");
+        CoreLogger::Instance()->Log(LogLevel::Info, "Engine terminated");
     }
 
 }

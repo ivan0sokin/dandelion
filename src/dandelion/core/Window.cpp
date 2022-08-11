@@ -1,9 +1,16 @@
 #include "Window.h"
 #include "Logger.h"
 
+#include <iomanip>
+#include <sstream>
+
 namespace Dandelion {
     Window::~Window() noexcept {
         glfwDestroyWindow(mHandle);
+
+        std::stringstream message;
+        message << "Destroyed window " << std::quoted(mTitle);
+        CoreLogger::Instance()->Log(LogLevel::Info, message.str());
     }
 
     void Window::SetHints() noexcept {
@@ -16,14 +23,32 @@ namespace Dandelion {
         this->SetHints();
 
         mHandle = glfwCreateWindow(mWidth, mHeight, mTitle.data(), nullptr, nullptr);
+
+        std::stringstream message;
+        message << "Window " << std::quoted(mTitle) << " with resolution " << mWidth << 'x' << mHeight << " was created";
+        CoreLogger::Instance()->Log(LogLevel::Info, message.str());
     }
 
     void Window::PollEvents() noexcept {
         glfwPollEvents();
     }
 
-    void Window::MakeCurrent() noexcept {
+    void Window::MakeContextCurrent() noexcept {
         glfwMakeContextCurrent(mHandle);
+
+        std::stringstream message;
+        message << "Current OpenGL context in set in window " << std::quoted(mTitle);
+        CoreLogger::Instance()->Log(LogLevel::Info, message.str());
+    }
+
+    void Window::SwapBuffers() noexcept {
+//        if (glfwGetCurrentContext() == mHandle) {
+            glfwSwapBuffers(mHandle);
+//        }
+    }
+
+    bool Window::ShouldBeClosed() noexcept {
+        return glfwWindowShouldClose(mHandle);
     }
 
 }

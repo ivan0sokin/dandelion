@@ -25,8 +25,11 @@ namespace Dandelion {
 
         void PollEvents() noexcept;
 
-        void MakeCurrent() noexcept;
+        void MakeContextCurrent() noexcept;
 
+        void SwapBuffers() noexcept;
+
+        bool ShouldBeClosed() noexcept;
     private:
         void SetHints() noexcept;
 

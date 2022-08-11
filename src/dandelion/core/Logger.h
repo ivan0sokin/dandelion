@@ -10,6 +10,7 @@
 #include <spdlog/sinks/basic_file_sink.h>
 
 namespace Dandelion {
+
     enum class LogLevel : int {
         Trace = SPDLOG_LEVEL_TRACE,
         Debug = SPDLOG_LEVEL_DEBUG,
@@ -27,7 +28,7 @@ namespace Dandelion {
 
         ~Logger() noexcept = default;
 
-        void Create() noexcept;
+        void Register() noexcept;
 
         void Log(const LogLevel &logLevel, std::string_view message) noexcept;
 
@@ -36,7 +37,17 @@ namespace Dandelion {
         std::string mLoggerName, mOutputFileName;
     };
 
-    inline static auto coreLogger = Logger("Core", "Dandelion.log");
+    class DANDELION_API CoreLogger : public Logger {
+    public:
+        CoreLogger(CoreLogger &) = delete;
+        CoreLogger& operator=(CoreLogger const&) = delete;
+
+        static std::shared_ptr<CoreLogger> Instance() noexcept;
+
+        ~CoreLogger() noexcept = default;
+    private:
+        CoreLogger() noexcept : Logger("Core", "Dandelion.log") {}
+    };
 }
 
 #ifdef DANDELION_DEBUG
