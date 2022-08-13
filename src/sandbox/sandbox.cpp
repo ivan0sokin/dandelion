@@ -14,25 +14,43 @@ public:
         mLogger->Register();
         mLogger->Log(LogLevel::Info, "Hello, Sandbox!");
 
-        auto wnd = NonResizableWindow("Dandelion", 1280, 720);
+        auto wnd = Window("Dandelion", 1280, 720);
         wnd.Create();
         wnd.MakeContextCurrent();
+
+        double totalTime = 0.0;
+        unsigned long long frameCount = 0;
+
+        Timer<double> timer;
         while (!wnd.ShouldBeClosed()) {
-            glBegin(GL_TRIANGLES);
-            glColor3f(1.0, 0.0, 0.0);
-            glVertex2f(-0.35, -0.5);
+            Draw();
 
-            glColor3f(0.0, 1.0, 0.0);
-            glVertex2f(0.35, -0.5);
-
-            glColor3f(0.0, 0.0, 1.0);
-            glVertex2f(0.0, 0.5);
-            glEnd();
+            ++frameCount;
+            timer.Update();
+            totalTime += timer.Elapsed();
 
             wnd.SwapBuffers();
 
             wnd.PollEvents();
         }
+
+        mLogger->Log(LogLevel::Info, "Average FPS: " + std::to_string(1000.0 * static_cast<double>(frameCount) / totalTime));
+    }
+
+private:
+    void Draw() noexcept {
+        glBegin(GL_TRIANGLES);
+
+        glColor3f(1.0, 0.0, 0.0);
+        glVertex2f(-0.35, -0.5);
+
+        glColor3f(0.0, 1.0, 0.0);
+        glVertex2f(0.35, -0.5);
+
+        glColor3f(0.0, 0.0, 1.0);
+        glVertex2f(0.0, 0.5);
+
+        glEnd();
     }
 
 private:

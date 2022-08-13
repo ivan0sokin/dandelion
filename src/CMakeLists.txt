@@ -1,4 +1,4 @@
-set(CORE dandelion/core/Application.cpp dandelion/core/Window.cpp dandelion/core/WindowCore.cpp dandelion/core/Engine.cpp dandelion/core/Logger.cpp)
+set(CORE dandelion/core/Application.cpp dandelion/core/Window.cpp dandelion/core/WindowCore.cpp dandelion/core/Engine.cpp dandelion/core/Logger.cpp dandelion/core/Timer.cpp)
 set(SOURCES ${CORE})
 
 add_library(dandelion SHARED ${SOURCES})

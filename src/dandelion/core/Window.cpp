@@ -37,14 +37,12 @@ namespace Dandelion {
         glfwMakeContextCurrent(mHandle);
 
         std::stringstream message;
-        message << "Current OpenGL context in set in window " << std::quoted(mTitle);
+        message << "Current OpenGL context is set in window " << std::quoted(mTitle);
         CoreLogger::Instance()->Log(LogLevel::Info, message.str());
     }
 
     void Window::SwapBuffers() noexcept {
-//        if (glfwGetCurrentContext() == mHandle) {
-            glfwSwapBuffers(mHandle);
-//        }
+        glfwSwapBuffers(mHandle);
     }
 
     bool Window::ShouldBeClosed() noexcept {

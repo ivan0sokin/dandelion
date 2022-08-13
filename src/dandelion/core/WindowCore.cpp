@@ -11,11 +11,15 @@ namespace Dandelion {
 
         CoreLogger::Instance()->Log(LogLevel::Info, "GLFW initialized");
 
+        this->SetCallbacks();
+
+        return mIsInitialized = true;
+    }
+
+    void WindowCore::SetCallbacks() noexcept {
         glfwSetErrorCallback([](int, const char *description) {
             CoreLogger::Instance()->Log(LogLevel::Error, description);
         });
-
-        return mIsInitialized = true;
     }
 
     void WindowCore::Terminate() noexcept {
@@ -30,4 +34,5 @@ namespace Dandelion {
         static std::shared_ptr<WindowCore> instance{new WindowCore};
         return instance;
     }
+
 }

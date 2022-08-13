@@ -6,5 +6,6 @@
 #include "core/Core.h"
 #include "core/Logger.h"
 #include "core/Window.h"
+#include "core/Timer.h"
 
 #endif

@@ -1,11 +1,13 @@
 #ifndef DANDELION_WINDOWCORE_H
 #define DANDELION_WINDOWCORE_H
 
+#include "Core.h"
+
 #include <memory>
 
 namespace Dandelion {
 
-    class WindowCore {
+    class DANDELION_API WindowCore {
     public:
         WindowCore(WindowCore &) = delete;
         WindowCore& operator=(WindowCore const&) = delete;
@@ -19,6 +21,8 @@ namespace Dandelion {
         void Terminate() noexcept;
     private:
         WindowCore() noexcept = default;
+
+        void SetCallbacks() noexcept;
 
     private:
         bool mIsInitialized = false;
