@@ -14,6 +14,8 @@ endif()
 
 if(CMAKE_BUILD_TYPE STREQUAL Debug)
     list(APPEND DANDELION_COMPILE_DEFINITIONS DANDELION_DEBUG)
+else()
+    list(APPEND DANDELION_COMPILE_DEFINITIONS O3)
 endif()
 
 target_compile_definitions(dandelion PRIVATE ${DANDELION_COMPILE_DEFINITIONS})
@@ -24,4 +26,8 @@ if(BUILD_SANDBOX_APP)
     target_include_directories(sandbox PRIVATE dandelion)
     target_link_libraries(sandbox dandelion opengl32)
     target_compile_definitions(sandbox PRIVATE DANDELION_WINDOWS)
+
+    if(CMAKE_BUILD_TYPE STREQUAL Release)
+        target_compile_definitions(sandbox PRIVATE O3)
+    endif()
 endif()

@@ -36,6 +36,8 @@ namespace Dandelion {
     void Window::MakeContextCurrent() noexcept {
         glfwMakeContextCurrent(mHandle);
 
+        glfwSwapInterval(0);
+
         std::stringstream message;
         message << "Current OpenGL context is set in window " << std::quoted(mTitle);
         CoreLogger::Instance()->Log(LogLevel::Info, message.str());
