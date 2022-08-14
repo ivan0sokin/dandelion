@@ -5,11 +5,12 @@
 #include <sstream>
 
 namespace Dandelion {
-    Window::~Window() noexcept {
+
+    void Window::Destroy() noexcept {
         glfwDestroyWindow(mHandle);
 
         std::stringstream message;
-        message << "Destroyed window " << std::quoted(mTitle);
+        message << "Destroyed window " << std::quoted(mInitialParameters.title);
         CoreLogger::Instance()->Log(LogLevel::Info, message.str());
     }
 
@@ -22,11 +23,20 @@ namespace Dandelion {
     void Window::Create() noexcept {
         this->SetHints();
 
-        mHandle = glfwCreateWindow(mWidth, mHeight, mTitle.data(), nullptr, nullptr);
+        auto [title, width, height] = mInitialParameters;
+        mHandle = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
 
         std::stringstream message;
-        message << "Window " << std::quoted(mTitle) << " with resolution " << mWidth << 'x' << mHeight << " was created";
+        message << "Window " << std::quoted(title) << " with resolution " << width << 'x' << height << " was created";
         CoreLogger::Instance()->Log(LogLevel::Info, message.str());
+    }
+
+    void Window::Show() noexcept {
+        glfwShowWindow(mHandle);
+    }
+
+    void Window::Hide() noexcept {
+        glfwHideWindow(mHandle);
     }
 
     void Window::PollEvents() noexcept {
@@ -39,7 +49,7 @@ namespace Dandelion {
         glfwSwapInterval(0);
 
         std::stringstream message;
-        message << "Current OpenGL context is set in window " << std::quoted(mTitle);
+        message << "Current OpenGL context is set in window " << std::quoted(mInitialParameters.title);
         CoreLogger::Instance()->Log(LogLevel::Info, message.str());
     }
 
@@ -51,4 +61,12 @@ namespace Dandelion {
         return glfwWindowShouldClose(mHandle);
     }
 
+    void MainWindow::SetInitialParameters(const WindowParameters &initialParameters) noexcept {
+        MainWindow::initialParameters = initialParameters;
+    }
+
+    std::shared_ptr<MainWindow> MainWindow::Instance() noexcept {
+        static std::shared_ptr<MainWindow> instance{new MainWindow};
+        return instance;
+    }
 }
