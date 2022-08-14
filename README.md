@@ -17,4 +17,5 @@ cmake --build . --config release
 # Dependencies
 
 [GLFW](https://github.com/glfw/glfw)\
-[SPDLOG](https://github.com/gabime/spdlog)
+[SPDLOG](https://github.com/gabime/spdlog)\
+[Glad](https://github.com/Dav1dde/glad)

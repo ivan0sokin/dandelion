@@ -8,3 +8,5 @@ set(SPDLOG_INSTALL OFF CACHE BOOL "" FORCE)
 set(SPDLOG_BUILD_EXAMPLE OFF CACHE BOOL "" FORCE)
 
 add_subdirectory(spdlog-1.x)
+
+add_subdirectory(glad)

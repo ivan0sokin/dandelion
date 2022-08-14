@@ -14,8 +14,10 @@ public:
 
         MainWindow::SetInitialParameters(WindowParameters("Sandbox", 1280, 720));
         MainWindow::Instance()->Create();
-        MainWindow::Instance()->MakeContextCurrent();
         MainWindow::Instance()->Show();
+
+        auto context = Engine::Instance()->CreateContext(MainWindow::Instance());
+        context->Create();
 
         double totalTime = 0.0;
         unsigned long long frameCount = 0;
@@ -32,6 +34,7 @@ public:
             MainWindow::Instance()->PollEvents();
         }
 
+        context->Destroy();
         MainWindow::Instance()->Destroy();
 
         mLogger->Log(LogLevel::Info, "Average FPS: " + std::to_string(1000.0 * static_cast<double>(frameCount) / totalTime));

@@ -1,10 +1,31 @@
-set(CORE dandelion/core/Application.cpp dandelion/core/Window.cpp dandelion/core/WindowCore.cpp dandelion/core/Engine.cpp dandelion/core/Logger.cpp dandelion/core/Timer.cpp)
-set(SOURCES ${CORE})
+set(
+    CORE
+    dandelion/core/Application.cpp
+    dandelion/core/Window.cpp
+    dandelion/core/WindowCore.cpp
+    dandelion/core/Engine.cpp
+    dandelion/core/Logger.cpp
+    dandelion/core/Timer.cpp
+)
+
+set(
+    CONTEXT
+    dandelion/context/gl/GLContext.cpp
+    dandelion/context/gl/GLShader.cpp
+        dandelion/context/gl/GLShaderProgram.cpp
+)
+
+set(
+    FILESYSTEM
+    dandelion/filesystem/FileSystem.cpp
+)
+
+set(SOURCES ${CORE} ${CONTEXT} ${FILESYSTEM})
 
 add_library(dandelion SHARED ${SOURCES})
 
-target_link_libraries(dandelion glfw spdlog)
-target_include_directories(dandelion PRIVATE ../third_party/glfw-3.3.8/include ../third_party/spdlog-1.x/include)
+target_link_libraries(dandelion glfw spdlog glad)
+target_include_directories(dandelion PRIVATE ../third_party/glfw-3.3.8/include ../third_party/spdlog-1.x/include ../third_party/glad/include)
 
 set(DANDELION_COMPILE_DEFINITIONS GLFW_INCLUDE_NONE)
 

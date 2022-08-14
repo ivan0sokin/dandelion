@@ -2,6 +2,8 @@
 #define DANDELION_ENGINE_H
 
 #include "Core.h"
+#include "Window.h"
+#include "../context/Context.h"
 
 #include <memory>
 
@@ -17,7 +19,10 @@ namespace Dandelion {
         ~Engine() noexcept = default;
 
         bool Initialize() noexcept;
+
         void Terminate() noexcept;
+
+        std::shared_ptr<Context> CreateContext(std::shared_ptr<Window> window);
 
     private:
         Engine() noexcept = default;

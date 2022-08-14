@@ -1,6 +1,7 @@
 #include "Engine.h"
 #include "Logger.h"
 #include "WindowCore.h"
+#include "../context/gl/GLContext.h"
 
 namespace Dandelion {
 
@@ -29,6 +30,10 @@ namespace Dandelion {
         CoreLogger::Instance()->Log(LogLevel::Info, "Window Core terminated");
 
         CoreLogger::Instance()->Log(LogLevel::Info, "Engine terminated");
+    }
+
+    std::shared_ptr<Context> Engine::CreateContext(std::shared_ptr<Window> window) {
+        return std::make_shared<GLContext>(window);
     }
 
 }
