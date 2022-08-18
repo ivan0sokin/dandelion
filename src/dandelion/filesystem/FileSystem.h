@@ -2,6 +2,7 @@
 #define DANDELION_FILESYSTEM_H
 
 #include "../core/Core.h"
+#include "../core/Result.h"
 
 #include <filesystem>
 #include <optional>

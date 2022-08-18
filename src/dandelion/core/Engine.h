@@ -6,6 +6,7 @@
 #include "../context/Context.h"
 
 #include <memory>
+#include <vector>
 
 namespace Dandelion {
 
@@ -22,10 +23,16 @@ namespace Dandelion {
 
         void Terminate() noexcept;
 
-        std::shared_ptr<Context> CreateContext(std::shared_ptr<Window> window);
+        std::shared_ptr<Context> CreateContext(std::shared_ptr<Window> window) noexcept;
 
+        void SetActiveContext(std::shared_ptr<Context> context) noexcept;
+
+        std::shared_ptr<Context> GetActiveContext() const noexcept;
     private:
         Engine() noexcept = default;
+
+    private:
+        std::shared_ptr<Context> mActiveContext;
     };
 
 }

@@ -6,35 +6,62 @@
 #include <glad/glad.h>
 
 #include <optional>
+#include <vector>
+#include <span>
 
 namespace Dandelion {
 
     class DANDELION_API GLShader : public Shader {
     public:
-        GLShader() noexcept = default;
 
-        inline GLShader(const ShaderType &type) noexcept : Shader(type) {}
+        inline GLShader(std::filesystem::path filePath) noexcept : mFilePath(std::move(filePath)) {}
 
         ~GLShader() noexcept override = default;
 
-        void LoadDataFromFile(const std::filesystem::path &filePath) noexcept override;
-
-        bool Assemble() noexcept override;
+        std::optional<std::string> Assemble() noexcept;
 
         constexpr GLuint ID() noexcept { return mID; }
 
     private:
-        std::optional<GLenum> DetermineShaderType() const noexcept;
+        GLShader() noexcept = default;
 
-        void CreateShaderObject(GLenum shaderType) noexcept;
+        virtual constexpr GLenum GetShaderType() const noexcept = 0;
 
-        void LoadShaderData() const noexcept;
+        void CreateShaderObject() noexcept;
+
+        std::optional<std::vector<char>> LoadDataFromFile() const noexcept;
+
+        void LoadShaderData(std::span<char> data) const noexcept;
 
         std::optional<std::string> CompileShader() const noexcept;
 
     private:
-        std::vector<char> mData;
+        std::filesystem::path mFilePath;
         GLuint mID;
+    };
+
+    class DANDELION_API GLVertexShader : public GLShader {
+    public:
+        GLVertexShader(std::filesystem::path filePath) : GLShader(std::move(filePath)) {}
+
+        ~GLVertexShader() noexcept override = default;
+
+    private:
+        GLVertexShader() noexcept = delete;
+
+        constexpr GLenum GetShaderType() const noexcept override { return GL_VERTEX_SHADER; }
+    };
+
+    class DANDELION_API GLFragmentShader : public GLShader {
+    public:
+        GLFragmentShader(std::filesystem::path filePath) : GLShader(std::move(filePath)) {}
+
+        ~GLFragmentShader() noexcept override = default;
+
+    private:
+        GLFragmentShader() noexcept = delete;
+
+        constexpr GLenum GetShaderType() const noexcept override { return GL_VERTEX_SHADER; }
     };
 
 }

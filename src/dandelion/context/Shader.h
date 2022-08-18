@@ -16,20 +16,26 @@ namespace Dandelion {
 
     class DANDELION_API Shader {
     public:
-        Shader() noexcept = delete;
-
-        constexpr Shader(const ShaderType &type) noexcept : mType(type) {}
-
         virtual ~Shader() noexcept = default;
 
-        constexpr ShaderType Type() const noexcept { return mType; };
+    protected:
+        Shader() noexcept = default;
+    };
 
-        virtual void LoadDataFromFile(const std::filesystem::path &filePath) noexcept = 0;
-
-        virtual bool Assemble() noexcept = 0;
+    class DANDELION_API VertexShader : public Shader {
+    public:
+        ~VertexShader() noexcept override = default;
 
     protected:
-        ShaderType mType;
+        VertexShader() noexcept = default;
+    };
+
+    class DANDELION_API FragmentShader : public Shader {
+    public:
+        ~FragmentShader() noexcept override = default;
+
+    protected:
+        FragmentShader() noexcept = default;
     };
 
 }

@@ -18,7 +18,7 @@ namespace Dandelion {
 
         void Destroy() noexcept override;
 
-        std::shared_ptr<Shader> CreateShader(const ShaderType &type) noexcept override;
+        std::shared_ptr<Shader> CreateShader(std::filesystem::path filePath, const ShaderType &type) noexcept override;
 
         std::shared_ptr<ShaderProgram> CreateShaderProgram() noexcept override;
 

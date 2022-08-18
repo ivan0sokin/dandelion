@@ -32,8 +32,19 @@ namespace Dandelion {
         CoreLogger::Instance()->Log(LogLevel::Info, "Engine terminated");
     }
 
-    std::shared_ptr<Context> Engine::CreateContext(std::shared_ptr<Window> window) {
-        return std::make_shared<GLContext>(window);
+    std::shared_ptr<Context> Engine::CreateContext(std::shared_ptr<Window> window) noexcept {
+        auto context = std::make_shared<GLContext>(window);
+        this->SetActiveContext(context);
+
+        return context;
+    }
+
+    void Engine::SetActiveContext(std::shared_ptr<Context> context) noexcept {
+        mActiveContext = context;
+    }
+
+    std::shared_ptr<Context> Engine::GetActiveContext() const noexcept {
+        return mActiveContext;
     }
 
 }

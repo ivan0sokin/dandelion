@@ -17,7 +17,7 @@ namespace Dandelion {
 
         virtual void Destroy() noexcept = 0;
 
-        virtual std::shared_ptr<Shader> CreateShader(const ShaderType &type) noexcept = 0;
+        virtual std::shared_ptr<Shader> CreateShader(const std::filesystem::path &filePath, const ShaderType &type) noexcept = 0;
 
         virtual std::shared_ptr<ShaderProgram> CreateShaderProgram() noexcept = 0;
     };

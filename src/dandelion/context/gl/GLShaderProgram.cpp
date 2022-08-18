@@ -4,7 +4,7 @@
 namespace Dandelion {
 
     void GLShaderProgram::AttachShader(std::shared_ptr<Shader> shader) noexcept {
-        mShaderIDs.push_back(std::dynamic_pointer_cast<GLShader>(shader)->ID());
+        mShaderIDs.push_back(std::static_pointer_cast<GLShader>(shader)->ID());
     }
 
     void GLShaderProgram::Assemble() noexcept {
