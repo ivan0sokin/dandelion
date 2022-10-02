@@ -1,13 +1,14 @@
 #include "GLContext.h"
 #include "../../core/Logger.h"
-#include "GLShader.h"
-#include "GLShaderProgram.h"
 
-#include <glad/glad.h>
+#include "GLShader.h"
+#include "GLProgram.h"
+#include "GLBuffer.h"
+#include "GLRenderObject.h"
 
 namespace Dandelion {
 
-    bool GLContext::Create() noexcept {
+    bool GLContext::Initialize() noexcept {
         mWindow->MakeContextCurrent();
 
         if (!this->InitializeGlad()) {
@@ -29,23 +30,21 @@ namespace Dandelion {
         return static_cast<bool>(gladLoadGLLoader((GLADloadproc)glfwGetProcAddress));
     }
 
-    std::shared_ptr<Shader> GLContext::CreateShader(std::filesystem::path filePath, const ShaderType &type) noexcept {
-        std::shared_ptr<GLShader> shader;
-        switch (type) {
-        case ShaderType::Vertex:
-            shader = std::make_shared<GLVertexShader>(filePath);
-            break;
-        case ShaderType::Fragment:
-            shader = std::make_shared<GLFragmentShader>(filePath);
-            break;
-        default:
-            break;
-        }
+    std::shared_ptr<Shader> GLContext::CreateVertexShader(const std::filesystem::path &filePath) noexcept {
+        return this->CreateShader(filePath, GL_VERTEX_SHADER);
+    }
+
+    std::shared_ptr<Shader> GLContext::CreateFragmentShader(const std::filesystem::path &filePath) noexcept {
+        return this->CreateShader(filePath, GL_FRAGMENT_SHADER);
+    }
+
+    std::shared_ptr<Shader> GLContext::CreateShader(const std::filesystem::path &filePath, GLenum type) noexcept {
+        auto shader = std::make_shared<GLShader>(filePath, type);
 
         auto error = shader->Assemble();
         if (error) {
             std::stringstream message;
-            message << "Failed to assemble " << std::quoted(filePath.filename().string()) << " shader";
+            message << "Failed to assemble " << std::quoted(filePath.filename().string()) << " shader, error: " << error.value();
 
             CoreLogger::Instance()->Log(LogLevel::Critical, message.str());
         }
@@ -53,8 +52,20 @@ namespace Dandelion {
         return shader;
     }
 
-    std::shared_ptr<ShaderProgram> GLContext::CreateShaderProgram() noexcept {
-        return std::make_shared<GLShaderProgram>();
+    std::shared_ptr<Program> GLContext::CreateProgram(std::initializer_list<std::shared_ptr<Shader>> shaders) noexcept {
+        return std::make_shared<GLProgram>(shaders);
+    }
+
+    std::shared_ptr<VertexBuffer> GLContext::CreateVertexBuffer(const void *data, std::size_t size, Layout layout) noexcept {
+        return std::make_shared<GLVertexBuffer>(data, size, std::move(layout));
+    }
+
+    std::shared_ptr<IndexBuffer> GLContext::CreateIndexBuffer(const void *data, std::size_t size) noexcept {
+        return std::make_shared<GLIndexBuffer>(data, size);
+    }
+
+    std::shared_ptr<RenderObject> GLContext::CreateRenderObject(std::initializer_list<std::shared_ptr<VertexBuffer>> vertexBuffers, std::shared_ptr<IndexBuffer> indexBuffer) noexcept {
+        return std::make_shared<GLRenderObject>(vertexBuffers, std::move(indexBuffer));
     }
 
 }

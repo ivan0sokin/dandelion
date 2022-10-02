@@ -5,7 +5,9 @@
 
 #include <glad/glad.h>
 
+#include <filesystem>
 #include <optional>
+#include <utility>
 #include <vector>
 #include <span>
 
@@ -13,8 +15,7 @@ namespace Dandelion {
 
     class DANDELION_API GLShader : public Shader {
     public:
-
-        inline GLShader(std::filesystem::path filePath) noexcept : mFilePath(std::move(filePath)) {}
+        GLShader(const std::filesystem::path &filePath, GLenum type) noexcept : mFilePath(filePath), mType(type) {}
 
         ~GLShader() noexcept override = default;
 
@@ -23,10 +24,6 @@ namespace Dandelion {
         constexpr GLuint ID() noexcept { return mID; }
 
     private:
-        GLShader() noexcept = default;
-
-        virtual constexpr GLenum GetShaderType() const noexcept = 0;
-
         void CreateShaderObject() noexcept;
 
         std::optional<std::vector<char>> LoadDataFromFile() const noexcept;
@@ -37,31 +34,8 @@ namespace Dandelion {
 
     private:
         std::filesystem::path mFilePath;
+        GLenum mType;
         GLuint mID;
-    };
-
-    class DANDELION_API GLVertexShader : public GLShader {
-    public:
-        GLVertexShader(std::filesystem::path filePath) : GLShader(std::move(filePath)) {}
-
-        ~GLVertexShader() noexcept override = default;
-
-    private:
-        GLVertexShader() noexcept = delete;
-
-        constexpr GLenum GetShaderType() const noexcept override { return GL_VERTEX_SHADER; }
-    };
-
-    class DANDELION_API GLFragmentShader : public GLShader {
-    public:
-        GLFragmentShader(std::filesystem::path filePath) : GLShader(std::move(filePath)) {}
-
-        ~GLFragmentShader() noexcept override = default;
-
-    private:
-        GLFragmentShader() noexcept = delete;
-
-        constexpr GLenum GetShaderType() const noexcept override { return GL_VERTEX_SHADER; }
     };
 
 }

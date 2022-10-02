@@ -31,8 +31,8 @@ namespace Dandelion {
         T mX, mY, mZ;
     };
 
-    using Vector3f = Vector3<float>;
-    using Color3f = Vector3<float>;
+//    using Vector3f = Vector3<float>;
+//    using Color3f = Vector3<float>;
 }
 
 #endif

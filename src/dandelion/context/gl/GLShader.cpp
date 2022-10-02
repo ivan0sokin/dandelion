@@ -34,7 +34,7 @@ namespace Dandelion {
     }
 
     void GLShader::CreateShaderObject() noexcept {
-        mID = glCreateShader(this->GetShaderType());
+        mID = glCreateShader(mType);
     }
 
     std::optional<std::vector<char>> GLShader::LoadDataFromFile() const noexcept {

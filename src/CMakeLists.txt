@@ -12,8 +12,9 @@ set(
     CONTEXT
     dandelion/context/gl/GLContext.cpp
     dandelion/context/gl/GLShader.cpp
-    dandelion/context/gl/GLShaderProgram.cpp
-    dandelion/context/objects/Polygon.cpp
+    dandelion/context/gl/GLProgram.cpp
+    dandelion/context/gl/GLBuffer.cpp
+    dandelion/context/gl/GLRenderObject.cpp
 )
 
 set(

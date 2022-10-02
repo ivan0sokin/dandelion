@@ -4,27 +4,18 @@ using namespace std::chrono;
 
 namespace Dandelion {
 
-    template<typename T>
-    Timer<T>::Timer() noexcept {
+    Timer::Timer() noexcept {
         this->Reset();
     }
 
-    template<typename T>
-    void Timer<T>::Reset() noexcept {
+    void Timer::Reset() noexcept {
         mLastTick = high_resolution_clock::now();
     }
 
-    template<typename T>
-    void Timer<T>::Update() noexcept {
+    void Timer::Update() noexcept {
         mCurrentTick = high_resolution_clock::now();
-        mElapsed = static_cast<duration<T, std::milli>>(mCurrentTick - mLastTick).count();
+        mElapsed = static_cast<duration<double, std::milli>>(mCurrentTick - mLastTick).count();
 
         mLastTick = mCurrentTick;
     }
-
-    template<typename T>
-    constexpr T Timer<T>::Elapsed() const noexcept {
-        return mElapsed;
-    }
-
 }

@@ -120,7 +120,7 @@ void basic_logfile_example()
 #include "spdlog/sinks/rotating_file_sink.h"
 void rotating_example()
 {
-    // Create a file rotating logger with 5mb size max and 3 rotated files
+    // Initialize a file rotating logger with 5mb size max and 3 rotated files
     auto max_size = 1048576 * 5;
     auto max_files = 3;
     auto logger = spdlog::rotating_logger_mt("some_logger_name", "logs/rotating.txt", max_size, max_files);
@@ -134,7 +134,7 @@ void rotating_example()
 #include "spdlog/sinks/daily_file_sink.h"
 void daily_example()
 {
-    // Create a daily logger - a new file is created every day on 2:30am
+    // Initialize a daily logger - a new file is created every day on 2:30am
     auto logger = spdlog::daily_logger_mt("daily_logger", "logs/daily.txt", 2, 30);
 }
 

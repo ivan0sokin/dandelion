@@ -4,6 +4,8 @@
 #include "../Context.h"
 #include "../../core/Window.h"
 
+#include <glad/glad.h>
+
 namespace Dandelion {
 
     class DANDELION_API GLContext : public Context {
@@ -14,16 +16,26 @@ namespace Dandelion {
 
         ~GLContext() noexcept override = default;
 
-        bool Create() noexcept override;
+        bool Initialize() noexcept override;
 
         void Destroy() noexcept override;
 
-        std::shared_ptr<Shader> CreateShader(std::filesystem::path filePath, const ShaderType &type) noexcept override;
+        std::shared_ptr<Shader> CreateVertexShader(const std::filesystem::path &filePath) noexcept override;
 
-        std::shared_ptr<ShaderProgram> CreateShaderProgram() noexcept override;
+        std::shared_ptr<Shader> CreateFragmentShader(const std::filesystem::path &filePath) noexcept override;
+
+        std::shared_ptr<Program> CreateProgram(std::initializer_list<std::shared_ptr<Shader>> shaders) noexcept override;
+
+        std::shared_ptr<VertexBuffer> CreateVertexBuffer(const void *data, std::size_t size, Layout layout) noexcept override;
+
+        std::shared_ptr<IndexBuffer> CreateIndexBuffer(const void *data, std::size_t size) noexcept override;
+
+        std::shared_ptr<RenderObject> CreateRenderObject(std::initializer_list<std::shared_ptr<VertexBuffer>> vertexBuffers, std::shared_ptr<IndexBuffer> indexBuffer) noexcept override;
 
     private:
         bool InitializeGlad() noexcept;
+
+        std::shared_ptr<Shader> CreateShader(const std::filesystem::path &filePath, GLenum type) noexcept;
 
     private:
         std::shared_ptr<Window> mWindow;
