@@ -26,6 +26,8 @@ namespace Dandelion {
 
         void LoadDataIntoBuffers() noexcept;
 
+        void UnbindIndexBuffer() noexcept;
+
     private:
         GLuint mID;
     };

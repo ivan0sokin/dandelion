@@ -1,6 +1,5 @@
 #include "GLRenderObject.h"
 #include "GLBuffer.h"
-#include "GLProgram.h"
 
 namespace Dandelion {
 
@@ -10,6 +9,7 @@ namespace Dandelion {
         this->Bind();
         this->LoadDataIntoBuffers();
         this->Unbind();
+        this->UnbindIndexBuffer();
     }
 
     GLRenderObject::~GLRenderObject() noexcept {
@@ -33,7 +33,12 @@ namespace Dandelion {
             auto indexBuffer = std::static_pointer_cast<GLIndexBuffer>(mIndexBuffer);
             indexBuffer->Bind();
             indexBuffer->CopyData();
-            indexBuffer->Unbind();
+        }
+    }
+
+    void GLRenderObject::UnbindIndexBuffer() noexcept {
+        if (mIndexBuffer) {
+            std::static_pointer_cast<GLIndexBuffer>(mIndexBuffer)->Unbind();
         }
     }
 
@@ -54,7 +59,11 @@ namespace Dandelion {
     }
 
     void GLRenderObject::DrawIndexed(std::size_t vertexCount) noexcept {
+        this->Bind();
 
+        glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(vertexCount), GL_UNSIGNED_INT, nullptr);
+
+        this->Unbind();
     }
 
 }

@@ -3,6 +3,20 @@
 
 using namespace Dandelion;
 
+struct Vertex {
+    Vector2f position;
+    Color3f color;
+
+    Vertex(const Vector2f &position, const Color3f &color) noexcept : position(position), color(color) {}
+
+    static Layout GetLayout() noexcept {
+        return {
+            {0, Element::Vector2f, 5 * sizeof(float), 0},
+            {1, Element::Vector3f, 5 * sizeof(float), 2 * sizeof(float)}
+        };
+    }
+};
+
 class SandboxApplication : public Application {
 public:
     SandboxApplication() noexcept = default;
@@ -61,24 +75,27 @@ private:
     }
 
     void CreateTriangle() {
-        std::array<float, 15> vertices = {
-            -0.35, -0.5, 1.0, 0.0, 0.0,
-            0.35, -0.5, 0.0, 1.0, 0.0,
-            0.0, 0.5, 0.0, 0.0, 1.0
+        const std::vector<Vertex> vertices = {
+            {{-0.5f, -0.5f}, {0.0f, 0.0f, 1.0f}},
+            {{0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}},
+            {{-0.35f, 0.5f}, {1.0f, 0.0f, 0.0f}},
+            {{0.35f, 0.5f}, {0.5f, 0.5f, 0.5f}}
         };
 
-        Layout layout = {
-            {0, Element::Vector2f, 5 * sizeof(float), 0},
-            {1, Element::Vector3f, 5 * sizeof(float), 2 * sizeof(float)}
+        auto vertexBuffer = mContext->CreateVertexBuffer(vertices.data(), sizeof(vertices[0]) * vertices.size(), Vertex::GetLayout());
+
+        std::array<unsigned, 6> indices = {
+            0, 1, 2,
+            2, 3, 1
         };
 
-        auto vertexBuffer = mContext->CreateVertexBuffer(vertices.data(), sizeof(vertices), layout);
+        auto indexBuffer = mContext->CreateIndexBuffer(indices.data(), sizeof(indices));
 
-        mTriangle = mContext->CreateRenderObject({ std::move(vertexBuffer) }, {});
+        mTriangle = mContext->CreateRenderObject({ std::move(vertexBuffer) }, std::move(indexBuffer));
     }
 
     void Draw() noexcept {
-        mTriangle->Draw(3);
+        mTriangle->DrawIndexed(6);
     }
 
 private:
