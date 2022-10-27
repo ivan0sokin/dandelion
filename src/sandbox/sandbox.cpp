@@ -1,21 +1,6 @@
 #include <Dandelion.h>
-#include <GL/gl.h>
 
 using namespace Dandelion;
-
-struct Vertex {
-    Vector2f position;
-    Color3f color;
-
-    Vertex(const Vector2f &position, const Color3f &color) noexcept : position(position), color(color) {}
-
-    static Layout GetLayout() noexcept {
-        return {
-            {0, Element::Vector2f, 5 * sizeof(float), 0},
-            {1, Element::Vector3f, 5 * sizeof(float), 2 * sizeof(float)}
-        };
-    }
-};
 
 class SandboxApplication : public Application {
 public:
@@ -33,17 +18,20 @@ public:
         mContext = Engine::Instance()->CreateContext(MainWindow::Instance());
         mContext->Initialize();
 
-        this->CreateTriangle();
+        this->CreateFrameRectangle();
 
         auto program = mContext->CreateProgram({
-            mContext->CreateVertexShader("polygon.vert"),
             mContext->CreateFragmentShader("polygon.frag")
         });
 
-        program->Enable();
+        std::vector<Color3f> colors = {
+            {1.0, 0.5, 1.0}
+        };
 
         double totalTime = 0.0;
         unsigned long long frameCount = 0;
+
+        program->Enable();
 
         Timer timer;
         while (!MainWindow::Instance()->ShouldBeClosed()) {
@@ -74,19 +62,19 @@ private:
         mLogger->Log(LogLevel::Info, "Hello, Sandbox!");
     }
 
-    void CreateTriangle() {
-        const std::vector<Vertex> vertices = {
-            {{-0.5f, -0.5f}, {0.0f, 0.0f, 1.0f}},
-            {{0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}},
-            {{-0.35f, 0.5f}, {1.0f, 0.0f, 0.0f}},
-            {{0.35f, 0.5f}, {0.5f, 0.5f, 0.5f}}
+    void CreateFrameRectangle() {
+        const std::vector<Vector2f> vertices = {
+            {-1.0f, -1.0f},
+            {1.0f, -1.0f},
+            {1.0f, 1.0f},
+            {-1.0f, 1.0f}
         };
 
-        auto vertexBuffer = mContext->CreateVertexBuffer(vertices.data(), sizeof(vertices[0]) * vertices.size(), Vertex::GetLayout());
+        auto vertexBuffer = mContext->CreateVertexBuffer(vertices.data(), sizeof(vertices[0]) * vertices.size(), {{0, Element::Vector2f, 2 * sizeof(float), 0}});
 
         std::array<unsigned, 6> indices = {
             0, 1, 2,
-            2, 3, 1
+            2, 3, 0
         };
 
         auto indexBuffer = mContext->CreateIndexBuffer(indices.data(), sizeof(indices));

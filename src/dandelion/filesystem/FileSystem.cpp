@@ -3,7 +3,6 @@
 
 #include <fstream>
 #include <sstream>
-#include <iomanip>
 
 namespace Dandelion {
 
@@ -18,10 +17,11 @@ namespace Dandelion {
             return {};
         }
 
-        auto dataSize = static_cast<std::ptrdiff_t>(fileStream.tellg());
-        std::vector<char> buffer(dataSize);
+        std::vector<char> buffer;
+        buffer.reserve(fileStream.tellg());
 
-        fileStream.seekg(0).read(buffer.data(), dataSize);
+        fileStream.seekg(0, std::ios::beg);
+        buffer.assign((std::istreambuf_iterator<char>(fileStream)), std::istreambuf_iterator<char>());
 
         return buffer;
     }

@@ -68,4 +68,8 @@ namespace Dandelion {
         return std::make_shared<GLRenderObject>(vertexBuffers, std::move(indexBuffer));
     }
 
+    std::shared_ptr<UniformBuffer> GLContext::CreateUniformBuffer(const void *data, std::size_t size, std::size_t binding) noexcept {
+        return std::make_shared<GLUniformBuffer>(data, size, binding);
+    }
+
 }

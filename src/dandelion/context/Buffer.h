@@ -35,6 +35,21 @@ namespace Dandelion {
 
         virtual ~IndexBuffer() noexcept override = default;
     };
+
+    class DANDELION_API UniformBuffer : public Buffer {
+    public:
+        inline UniformBuffer(const void *data, std::size_t size, std::size_t binding) noexcept : Buffer(data, size), mBinding(binding) {}
+
+        virtual void SetSubData(const void *data, std::size_t offset, std::size_t size) noexcept = 0;
+
+        inline void SetData(const void *data) noexcept { this->SetSubData(data, 0, mSize); }
+
+        virtual ~UniformBuffer() noexcept override = default;
+
+    protected:
+        std::size_t mBinding;
+    };
+
 }
 
 #endif

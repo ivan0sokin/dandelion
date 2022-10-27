@@ -42,24 +42,72 @@ namespace Dandelion {
             return {mX + scalar, mY + scalar, mZ + scalar, mW + scalar};
         }
 
+        constexpr Vector4 & operator+=(T scalar) const noexcept {
+            mX += scalar;
+            mY += scalar;
+            mZ += scalar;
+            mW += scalar;
+            return *this;
+        }
+
         constexpr Vector4 operator-(T scalar) const noexcept {
             return {mX - scalar, mY - scalar, mZ - scalar, mW - scalar};
+        }
+
+        constexpr Vector4 & operator-=(T scalar) const noexcept {
+            mX -= scalar;
+            mY -= scalar;
+            mZ -= scalar;
+            mW -= scalar;
+            return *this;
         }
 
         constexpr Vector4 operator*(T scalar) const noexcept {
             return {mX * scalar, mY * scalar, mZ * scalar, mW * scalar};
         }
 
+        constexpr Vector4 & operator*=(T scalar) const noexcept {
+            mX *= scalar;
+            mY *= scalar;
+            mZ *= scalar;
+            mW *= scalar;
+            return *this;
+        }
+
         constexpr Vector4 operator/(T scalar) const noexcept {
             return *this * (1 / scalar);
+        }
+
+        constexpr Vector4 & operator/=(T scalar) const noexcept {
+            mX /= scalar;
+            mY /= scalar;
+            mZ /= scalar;
+            mW /= scalar;
+            return *this;
         }
 
         constexpr Vector4 operator+(const Vector4 &other) const noexcept {
             return {mX + other.mX, mY + other.mY, mZ + other.mZ, mW + other.mW};
         }
 
+        constexpr Vector4 & operator+=(const Vector4 &other) const noexcept {
+            mX += other.mX;
+            mY += other.mY;
+            mZ += other.mZ;
+            mW += other.mW;
+            return *this;
+        }
+
         constexpr Vector4 operator-(const Vector4 &other) const noexcept {
             return {mX - other.mX, mY - other.mY, mZ - other.mZ, mW - other.mW};
+        }
+
+        constexpr Vector4 & operator-=(const Vector4 &other) const noexcept {
+            mX -= other.mX;
+            mY -= other.mY;
+            mZ -= other.mZ;
+            mW -= other.mW;
+            return *this;
         }
 
     private:

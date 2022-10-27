@@ -32,6 +32,8 @@ namespace Dandelion {
 
         std::shared_ptr<RenderObject> CreateRenderObject(std::initializer_list<std::shared_ptr<VertexBuffer>> vertexBuffers, std::shared_ptr<IndexBuffer> indexBuffer) noexcept override;
 
+        std::shared_ptr<UniformBuffer> CreateUniformBuffer(const void *data, std::size_t size, std::size_t binding) noexcept override;
+
     private:
         bool InitializeGlad() noexcept;
 

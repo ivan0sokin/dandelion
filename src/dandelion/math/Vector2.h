@@ -36,24 +36,60 @@ namespace Dandelion {
             return {mX + scalar, mY + scalar};
         }
 
+        constexpr Vector2 & operator+=(T scalar) const noexcept {
+            mX += scalar;
+            mY += scalar;
+            return *this;
+        }
+
         constexpr Vector2 operator-(T scalar) const noexcept {
             return {mX - scalar, mY - scalar};
+        }
+
+        constexpr Vector2 & operator-=(T scalar) const noexcept {
+            mX -= scalar;
+            mY -= scalar;
+            return *this;
         }
 
         constexpr Vector2 operator*(T scalar) const noexcept {
             return {mX * scalar, mY * scalar};
         }
 
+        constexpr Vector2 & operator*=(T scalar) const noexcept {
+            mX *= scalar;
+            mY *= scalar;
+            return *this;
+        }
+
         constexpr Vector2 operator/(T scalar) const noexcept {
             return *this * (1 / scalar);
+        }
+
+        constexpr Vector2 & operator/=(T scalar) const noexcept {
+            mX /= scalar;
+            mY /= scalar;
+            return *this;
         }
 
         constexpr Vector2 operator+(const Vector2 &other) const noexcept {
             return {mX + other.mX, mY + other.mY};
         }
 
+        constexpr Vector2 & operator+=(const Vector2 &other) const noexcept {
+            mX += other.mX;
+            mY += other.mY;
+            return *this;
+        }
+
         constexpr Vector2 operator-(const Vector2 &other) const noexcept {
             return {mX - other.mX, mY - other.mY};
+        }
+
+        constexpr Vector2 & operator-=(const Vector2 &other) const noexcept {
+            mX -= other.mX;
+            mY -= other.mY;
+            return *this;
         }
 
     private:

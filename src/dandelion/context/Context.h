@@ -26,6 +26,8 @@ namespace Dandelion {
 
         virtual std::shared_ptr<IndexBuffer> CreateIndexBuffer(const void *data, std::size_t size) noexcept = 0;
 
+        virtual std::shared_ptr<UniformBuffer> CreateUniformBuffer(const void *data, std::size_t size, std::size_t binding) noexcept = 0;
+
         virtual std::shared_ptr<RenderObject> CreateRenderObject(std::initializer_list<std::shared_ptr<VertexBuffer>> vertexBuffers, std::shared_ptr<IndexBuffer> indexBuffer) noexcept = 0;
     };
 

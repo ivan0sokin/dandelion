@@ -48,6 +48,18 @@ namespace Dandelion {
 
         virtual ~GLIndexBuffer() noexcept override = default;
     };
+
+    class DANDELION_API GLUniformBuffer : public GLBuffer, public UniformBuffer {
+    public:
+        GLUniformBuffer(const void *data, std::size_t size, std::size_t binding) noexcept;
+
+        void AllocateMemory() noexcept;
+
+        void SetSubData(const void *data, std::size_t offset, std::size_t size) noexcept override;
+
+        virtual ~GLUniformBuffer() noexcept override = default;
+    };
+
 }
 
 #endif
