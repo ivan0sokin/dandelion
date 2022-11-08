@@ -8,7 +8,7 @@
 
 namespace Dandelion {
 
-    enum class Element : std::size_t {
+    enum class Element : unsigned {
         Float = 0,
         Vector2f,
         Vector3f,
@@ -31,8 +31,8 @@ namespace Dandelion {
     private:
         std::vector<std::tuple<std::size_t, Element, std::size_t, std::size_t>> mElements;
 
-        static constexpr std::array<std::size_t, 4> componentCount = { 1, 2, 3, 4 };
-        static constexpr std::array<Element, 4> componentType = {Element::Float, Element::Float, Element::Float, Element::Float };
+        static constexpr std::array<std::size_t, 4> componentCount = {1, 2, 3, 4};
+        static constexpr std::array<Element, 4> componentType = {Element::Float, Element::Float, Element::Float, Element::Float};
     };
 
 }

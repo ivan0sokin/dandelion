@@ -48,7 +48,7 @@ namespace Dandelion {
     void GLUniformBuffer::SetSubData(const void *data, std::size_t offset, std::size_t size) noexcept {
         this->Bind();
 
-        glBufferSubData(mTarget, static_cast<GLintptr>(offset), static_cast<GLsizeiptr>(size), mData);
+        glBufferSubData(mTarget, static_cast<GLintptr>(offset), static_cast<GLsizeiptr>(size), data);
 
         this->Unbind();
     }

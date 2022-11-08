@@ -6,6 +6,7 @@ set(
     dandelion/core/Engine.cpp
     dandelion/core/Logger.cpp
     dandelion/core/Timer.cpp
+    dandelion/core/input/Mouse.cpp
 )
 
 set(
